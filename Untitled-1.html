@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Choose Wisely</title>
+
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #111, #1f1f1f);
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    button {
+        position: absolute;
+        border: none;
+        padding: 18px 35px;
+        font-size: 1.1rem;
+        border-radius: 14px;
+        color: white;
+        cursor: pointer;
+        transition:
+            transform 0.15s,
+            background 0.3s,
+            box-shadow 0.3s;
+        touch-action: manipulation;
+        user-select: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.35);
+        max-width: 340px;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    #cuteBtn {
+        background: rgb(40, 199, 111);
+        left: 18%;
+        top: 45%;
+    }
+
+    #exitBtn {
+        background: #ea5455;
+        left: 65%;
+        top: 45%;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <button id="cuteBtn">
+        You are cute
+    </button>
+
+    <button id="exitBtn">
+        Exit
+    </button>
+
+</div>
+
+<script>
+
+    const cuteBtn = document.getElementById("cuteBtn");
+    const exitBtn = document.getElementById("exitBtn");
+
+    // Compliments
+    const compliments = [
+        "You are honestly one of the cutest people I have ever seen",
+        "Your smile could probably fix somebody's bad day instantly",
+        "You somehow keep looking prettier every single second",
+        "At this point you are dangerously attractive and it should be illegal",
+        "You have the kind of face people randomly remember later",
+        "You look like the main character in a movie everybody likes",
+        "Your existence alone increases global happiness by at least 20 percent",
+        "You are prettier than most people after filters and editing",
+        "Whoever gets to see you every day is honestly lucky",
+        "You somehow look cool and adorable at the same time",
+        "Your smile has better graphics than most modern games",
+        "Even mirrors are probably happy when you walk by",
+        "You are the human version of a perfect screenshot",
+        "Scientists should seriously study how somebody can naturally look this good",
+        "At this point compliments are becoming scientifically insufficient",
+        "You officially broke the compliment system because there are not enough words left",
+        "Okay now you are just flexing on the rest of humanity"
+    ];
+
+    let complimentIndex = 0;
+
+    // Green button compliments
+    cuteBtn.addEventListener("click", () => {
+
+        cuteBtn.innerText = compliments[complimentIndex];
+
+        if (complimentIndex < compliments.length - 1) {
+            complimentIndex++;
+        }
+    });
+
+    // Exit button messages
+    const exitMessages = [
+        "No don't",
+        "Wait..",
+        "Are you really trying to leave?",
+        "That is actually rude",
+        "You cannot escape this website",
+        "Come on just press the green button instead",
+        "Why are you still trying",
+        "This button is getting emotionally damaged",
+        "Bro please",
+        "The exit button is panicking",
+        "You are making this harder than it needs to be",
+        "Please reconsider your life choices",
+        "This button has given up his life"
+    ];
+
+    let exitIndex = 0;
+
+    // Green button color values
+    let greenLevel = 199;
+
+    // Screen shake effect
+    function shakeScreen() {
+
+        document.body.animate(
+            [
+                { transform: 'translate(0px, 0px)' },
+                { transform: 'translate(-8px, 5px)' },
+                { transform: 'translate(8px, -5px)' },
+                { transform: 'translate(-6px, -3px)' },
+                { transform: 'translate(6px, 3px)' },
+                { transform: 'translate(0px, 0px)' }
+            ],
+            {
+                duration: 250,
+                iterations: 1
+            }
+        );
+    }
+
+    // Move exit button randomly
+    function moveButton() {
+
+        const maxX = window.innerWidth - exitBtn.offsetWidth;
+        const maxY = window.innerHeight - exitBtn.offsetHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        exitBtn.style.left = `${randomX}px`;
+        exitBtn.style.top = `${randomY}px`;
+    }
+
+    // Exit button behavior
+    exitBtn.addEventListener("click", (e) => {
+
+        e.preventDefault();
+
+        // Shake screen
+        shakeScreen();
+
+        // Change exit text
+        exitBtn.innerText = exitMessages[exitIndex];
+
+        if (exitIndex < exitMessages.length - 1) {
+            exitIndex++;
+        }
+
+        // Make green button more red
+        greenLevel -= 15;
+
+        if (greenLevel < 0) {
+            greenLevel = 0;
+        }
+
+        cuteBtn.style.background =
+            `rgb(220, ${greenLevel}, ${greenLevel})`;
+
+        // Final phase
+        if (exitIndex >= exitMessages.length - 1) {
+
+            cuteBtn.innerText =
+                "Okay you are not allowed to leave anymore";
+
+            cuteBtn.style.background = "rgb(180, 0, 0)";
+            cuteBtn.style.boxShadow =
+                "0 0 25px rgba(255,0,0,0.8)";
+        }
+
+        // Teleport button
+        moveButton();
+    });
+
+</script>
+
+</body>
+</html>
